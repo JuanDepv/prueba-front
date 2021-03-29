@@ -184,7 +184,7 @@ function getdataPeriods() {
   return response;
 }
 
-// genarete a rendom color
+// genarete a random color
 function getRandomColor() {
   let r = Math.floor(Math.random() * 256);
   let g = Math.floor(Math.random() * 256);
