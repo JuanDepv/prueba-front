@@ -1,0 +1,47 @@
+*, body {
+    margin: 0;
+    padding: 0;
+}
+
+/* ajuste al margin de la clase row */
+.row {
+    margin: 0;
+}
+
+/* calendar user */
+.calendar-user {
+    border-right: 1px solid grey;
+    padding: 0;
+}
+
+/* search user */
+.input-group-text {
+    color: transparent !important;
+    background-color: transparent !important;
+}
+.fa-ser {
+    color: grey;
+}
+
+/* card of user */
+.user-hidd {
+    visibility: hidden;
+}
+
+.user-card {
+    border: 1px solid grey;
+    display: flex;
+    cursor: move;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.user-info {
+    padding: 10px;
+    max-width: 80%;
+}
+
+.user-color {
+    width: 30px;
+    max-width: 20%;
+}
