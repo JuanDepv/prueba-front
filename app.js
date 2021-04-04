@@ -3,7 +3,6 @@ const calendar = document.querySelector("#calendar");
 let draggableUser = document.querySelector("#usuarios");
 var dataUser = [];
 var dataPeriods = [];
-var startDateAndEndDate = "";
 
 getDataUser()
   .then((resp) => resp.json())
@@ -15,8 +14,6 @@ getdataPeriods()
 
 document.addEventListener("DOMContentLoaded", function () {
   setTimeout(() => {
-    eventDay();
-
     new FullCalendar.Draggable(draggableUser, {
       itemSelector: "#user",
       eventData: function (eventEl) {
@@ -24,7 +21,6 @@ document.addEventListener("DOMContentLoaded", function () {
           title: [
             eventEl.getAttribute("data-user"),
             eventEl.getAttribute("data-name"),
-            this.startDateAndEndDate,
           ],
         };
       },
@@ -104,8 +100,18 @@ document.addEventListener("DOMContentLoaded", function () {
       droppable: true,
       eventResizableFromStart: true,
       drop: function (info) {
-        // is the "remove after drop" checkbox checked?
-        // alert("event drop");
+        console.log(info);
+
+        let id = info.jsEvent.target.parentElement.parentElement.dataset.user;
+        let nombreProgramado =
+          info.jsEvent.target.parentElement.parentElement.dataset.name;
+        let fecha = info.dateStr;
+
+        console.log(id);
+        console.log(nombreProgramado);
+        console.log(fecha);
+
+        setLocalStorage(id, nombreProgramado, fecha, fecha);
       },
 
       eventReceive: function (info) {
@@ -126,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     calendarLib.render();
     getUser();
-  }, 3000);
+  }, 2000);
 });
 
 /**
@@ -153,24 +159,31 @@ document.querySelector("#buscador").addEventListener("keyup", function (event) {
 document
   .querySelector("#save-programation")
   .addEventListener("click", function () {
-    document
-      .querySelectorAll(
-        ".fc-daygrid-day .fc-daygrid-day-frame .fc-daygrid-day-events .fc-daygrid-event-harness a .fc-event-main .fc-event-main-frame .fc-event-title-container .fc-event-title"
-      )
-      .forEach((element) => {
-        console.log(this.startDateAndEndDate);
-        console.log(element.innerText.split(","));
-      });
+    let data = getLocalStorage();
+
+    console.log(data);
+
+    if (data.length > 0 || data) {
+      fetch(`${URL_BASE}guardar`, {
+        method: "POST",
+        body: data,
+      })
+        .then((data) => data.json())
+        .then((res) => {
+          console.log(res);
+          if (res.state === 1) {
+            alert("se ha enviado los datos");
+            localStorage.removeItem("programation");
+            localStorage.setItem("programation", "[]");
+          }
+        });
+    }
   });
 
 /**
  * function -
  * @author Juan Jose
  */
-
-function eventDay(date) {
-  return (this.startDateAndEndDate = date);
-}
 
 // returns the info users
 function getDataUser() {
@@ -268,3 +281,31 @@ function lastPositionDate() {
   let endDate = "" + last[0].anio + "-" + last[0].mes + "-01";
   return endDate;
 }
+
+// localstorage
+function setLocalStorage(id, title, fecha_init, fecha_end) {
+  let old_data = [];
+
+  if (localStorage.getItem("programation") == null) {
+    localStorage.setItem("programation", "[]");
+  }
+
+  const object = {
+    idus: id,
+    fecha: fecha_init,
+  };
+
+  old_data = JSON.parse(localStorage.getItem("programation"));
+  old_data.push(object);
+
+  localStorage.setItem("programation", JSON.stringify(old_data));
+}
+
+function getLocalStorage() {
+  const storage = localStorage;
+  if (storage.getItem("programation") != null) {
+    return JSON.parse(storage.getItem("programation"));
+  }
+}
+
+getLocalStorage();
