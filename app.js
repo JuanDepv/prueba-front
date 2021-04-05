@@ -44,19 +44,17 @@ document.addEventListener("DOMContentLoaded", function () {
         right: "dayGridMonth",
       },
 
-      // events - recive the events
+      
+      // test schedules - default
       events: {
-        // url: "",
-        // success: function (response) {
-        //   console.log(response);
-        // },
-        // failure: function (response) {
-        //   console.warn(response);
-        // },
-        // eventDataTransform: function (event) {
-        //   console.log(event);
-        // },
-        // color: getRandomColor(),
+        url: "events.json",
+        success: function (response) {
+        },
+        failure: function (response) {
+        },
+        eventDataTransform: function (event) {
+          
+        },
       },
 
       //sizing
@@ -90,19 +88,23 @@ document.addEventListener("DOMContentLoaded", function () {
       //   alert("selected " + info.startStr + " to " + info.endStr);
       // },
 
+      eventClick: function(info) {
+
+        // alert('Event: ' + info.event.title);
+        // alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+        // alert('View: ' + info.view.type);
+      },
+
       eventOverlap: function (stillEvent, movingEvent) {
         return stillEvent.allDay && movingEvent.allDay;
       },
-
-      eventClick: function (info) {},
 
       editable: true,
       droppable: true,
       eventResizableFromStart: true,
       drop: function (info) {
-
-        let id = info.jsEvent.target.parentElement.parentElement.dataset.user;
-        let nombreProgramado = info.jsEvent.target.parentElement.parentElement.dataset.name;
+        let id = info.draggedEl.attributes[2].value;
+        let nombreProgramado = info.draggedEl.attributes[3].value;
         let fecha = info.dateStr;
 
         setLocalStorage(id, nombreProgramado, fecha, fecha);
@@ -118,14 +120,16 @@ document.addEventListener("DOMContentLoaded", function () {
         alert(
           info.event.title + " was dropped on " + info.event.start.toISOString()
         );
-        if (!confirm("Are you sure about this change?")) {
+        if (!confirm("Are you sure about this change? Estas seguro de cambiar la programación")) {
           info.revert();
         }
       },
     });
-
+    
     calendarLib.render();
+    
   }, 2000);
+
 });
 
 /**
@@ -133,7 +137,10 @@ document.addEventListener("DOMContentLoaded", function () {
  * @author Juan Jose
  */
 
-document.querySelector("#buscador").addEventListener("keyup", function (event) {
+
+document
+  .querySelector("#buscador")
+  .addEventListener("keyup", function (event) {
   event.preventDefault();
   let valueSearch = document.querySelector("#buscador").value;
 
@@ -147,11 +154,12 @@ document.querySelector("#buscador").addEventListener("keyup", function (event) {
   } else {
     getUser();
   }
-});
+  });
 
 document
   .querySelector("#save-programation")
-  .addEventListener("click", function () {
+  .addEventListener("click", function (event) {
+    event.preventDefault();
     let data = getLocalStorage();
 
     console.log(data);
@@ -172,6 +180,8 @@ document
         });
     }
   });
+
+
 
 /**
  * function -
