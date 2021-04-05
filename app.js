@@ -13,6 +13,9 @@ getdataPeriods()
   .then((data) => (this.dataPeriods = data));
 
 document.addEventListener("DOMContentLoaded", function () {
+  
+  getUser();
+  
   setTimeout(() => {
     new FullCalendar.Draggable(draggableUser, {
       itemSelector: "#user",
@@ -100,22 +103,16 @@ document.addEventListener("DOMContentLoaded", function () {
       droppable: true,
       eventResizableFromStart: true,
       drop: function (info) {
-        console.log(info);
 
         let id = info.jsEvent.target.parentElement.parentElement.dataset.user;
-        let nombreProgramado =
-          info.jsEvent.target.parentElement.parentElement.dataset.name;
+        let nombreProgramado = info.jsEvent.target.parentElement.parentElement.dataset.name;
         let fecha = info.dateStr;
-
-        console.log(id);
-        console.log(nombreProgramado);
-        console.log(fecha);
 
         setLocalStorage(id, nombreProgramado, fecha, fecha);
       },
 
       eventReceive: function (info) {
-        eventDay(info.event.startStr);
+        // eventDay(info.event.startStr);
         // alert("event received! - eventReceive", info.event);
       },
 
@@ -131,7 +128,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     calendarLib.render();
-    getUser();
   }, 2000);
 });
 
@@ -307,5 +303,3 @@ function getLocalStorage() {
     return JSON.parse(storage.getItem("programation"));
   }
 }
-
-getLocalStorage();
