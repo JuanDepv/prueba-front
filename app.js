@@ -4,6 +4,10 @@ let draggableUser = document.querySelector("#usuarios");
 var dataUser = [];
 var dataPeriods = [];
 
+const headers = {
+  'Content-Type': 'application/json',
+};
+
 getDataUser()
   .then((resp) => resp.json())
   .then((data) => (this.dataUser = data));
@@ -190,13 +194,13 @@ document
 
 // returns the info users
 function getDataUser() {
-  let response = fetch(`${URL_BASE}usuarios`);
+  let response = fetch(`${URL_BASE}usuarios`, headers);
   return response;
 }
 
 // returns the periods
 function getdataPeriods() {
-  let response = fetch(`${URL_BASE}periodos`);
+  let response = fetch(`${URL_BASE}periodos`, headers);
   return response;
 }
 
