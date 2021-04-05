@@ -8,13 +8,16 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
-getDataUser()
-  .then((resp) => resp.json())
-  .then((data) => (this.dataUser = data));
+getDataUser();
+getdataPeriods();
 
-getdataPeriods()
-  .then((resp) => resp.json())
-  .then((data) => (this.dataPeriods = data));
+// getDataUser()
+//   .then((resp) => resp.json())
+//   .then((data) => (this.dataUser = data));
+
+// getdataPeriods()
+//   .then((resp) => resp.json())
+//   .then((data) => (this.dataPeriods = data));
 
 document.addEventListener("DOMContentLoaded", function () {
   
@@ -194,14 +197,24 @@ document
 
 // returns the info users
 function getDataUser() {
-  let response = fetch(`${URL_BASE}usuarios`, headers);
-  return response;
+  // fetch(`${URL_BASE}usuarios`, headers);
+  // return response;
+  
+  fetch(`${URL_BASE}usuarios`, headers)
+    .then((resp) => resp.json())
+    .then((data) => (this.dataUser = data))
+    .catch((error) => console.log(error));
 }
 
 // returns the periods
 function getdataPeriods() {
-  let response = fetch(`${URL_BASE}periodos`, headers);
-  return response;
+  // let response = fetch(`${URL_BASE}periodos`, headers);
+  // return response;
+
+  fetch(`${URL_BASE}periodos`, headers)
+    .then((resp) => resp.json())
+    .then((data) => (this.dataPeriods = data))
+    .catch((error) => console.log(error));
 }
 
 // genarete a random color
