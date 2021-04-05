@@ -21,10 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
       itemSelector: "#user",
       eventData: function (eventEl) {
         return {
-          title: [
-            eventEl.getAttribute("data-user"),
-            eventEl.getAttribute("data-name"),
-          ],
+          title: eventEl.getAttribute("data-name"),
         };
       },
     });
