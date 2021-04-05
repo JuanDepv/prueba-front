@@ -14,7 +14,7 @@ getdataPeriods()
 
 document.addEventListener("DOMContentLoaded", function () {
   
-  getUser();
+  
   
   setTimeout(() => {
     new FullCalendar.Draggable(draggableUser, {
@@ -129,6 +129,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     calendarLib.render();
   }, 2000);
+  
+  getUser();
 });
 
 /**
