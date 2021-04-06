@@ -3,10 +3,7 @@ const calendar = document.querySelector("#calendar");
 let draggableUser = document.querySelector("#usuarios");
 var dataUser = [];
 var dataPeriods = [];
-
-const headers = {
-  'Content-Type': 'application/json',
-};
+const headers = {'Content-Type': 'application/json'};
 
 getDataUser();
 getdataPeriods();
@@ -118,6 +115,10 @@ document.addEventListener("DOMContentLoaded", function () {
       },
 
       eventReceive: function (info) {
+        console.log(info.event.allDay);
+        if(info.event.allDay) {
+          alert("event received! - eventReceive", info.event);
+        }
         // eventDay(info.event.startStr);
         // alert("event received! - eventReceive", info.event);
       },
@@ -199,7 +200,7 @@ document
 function getDataUser() {
   // fetch(`${URL_BASE}usuarios`, headers);
   // return response;
-  
+
   fetch(`${URL_BASE}usuarios`, headers)
     .then((resp) => resp.json())
     .then((data) => (this.dataUser = data))
