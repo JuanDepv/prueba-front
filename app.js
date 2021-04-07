@@ -115,20 +115,13 @@ document.addEventListener("DOMContentLoaded", function () {
       },
 
       eventReceive: function (info) {
-        console.log(info.event.allDay);
-        if(info.event.allDay) {
-          alert("event received! - eventReceive", info.event);
-        }
         // eventDay(info.event.startStr);
         // alert("event received! - eventReceive", info.event);
       },
 
       // confirm for move the event
       eventDrop: function (info) {
-        alert(
-          info.event.title + " was dropped on " + info.event.start.toISOString()
-        );
-        if (!confirm("Are you sure about this change? Estas seguro de cambiar la programación")) {
+        if (!confirm("Estas seguro de cambiar la programación")) {
           info.revert();
         }
       },
