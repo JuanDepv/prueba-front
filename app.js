@@ -178,6 +178,8 @@ document
               localStorage.setItem("programation", "[]");
             }
           });
+      } else {
+        alert("No hay pramaciones para enviar....!")  
       }
     } else {
       alert("No hay pramaciones para enviar....!")
