@@ -163,22 +163,24 @@ document
     event.preventDefault();
     let data = getLocalStorage();
 
-    console.log(data);
-
-    if (data.length > 0 || data) {
-      fetch(`${URL_BASE}guardar`, {
-        method: "POST",
-        body: data,
-      })
-        .then((data) => data.json())
-        .then((res) => {
-          console.log(res);
-          if (res.state === 1) {
-            alert("se ha enviado los datos");
-            localStorage.removeItem("programation");
-            localStorage.setItem("programation", "[]");
-          }
-        });
+    if (data != undefined) {
+      if(data.length > 0) {
+        fetch(`${URL_BASE}guardar`, {
+          method: "POST",
+          body: data,
+        })
+          .then((data) => data.json())
+          .then((res) => {
+            console.log(res);
+            if (res.state === 1) {
+              alert("se ha enviado los datos");
+              localStorage.removeItem("programation");
+              localStorage.setItem("programation", "[]");
+            }
+          });
+      }
+    } else {
+      alert("No hay pramaciones para enviar....!")
     }
   });
 
