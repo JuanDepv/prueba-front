@@ -3,7 +3,6 @@ const calendar = document.querySelector("#calendar");
 let draggableUser = document.querySelector("#usuarios");
 var dataUser = [];
 var dataPeriods = [];
-const headers = {'Content-Type': 'application/json'};
 
 getDataUser();
 getdataPeriods();
@@ -25,7 +24,8 @@ document.addEventListener("DOMContentLoaded", function () {
       itemSelector: "#user",
       eventData: function (eventEl) {
         return {
-          title: eventEl.getAttribute("data-name"),
+          id: eventEl.getAttribute("data-user"),
+          title: eventEl.innerText
         };
       },
     });
@@ -46,19 +46,6 @@ document.addEventListener("DOMContentLoaded", function () {
         left: "prev,next",
         center: "title",
         right: "dayGridMonth",
-      },
-
-      
-      // test schedules - default
-      events: {
-        url: "events.json",
-        success: function (response) {
-        },
-        failure: function (response) {
-        },
-        eventDataTransform: function (event) {
-          
-        },
       },
 
       //sizing
@@ -107,9 +94,17 @@ document.addEventListener("DOMContentLoaded", function () {
       droppable: true,
       eventResizableFromStart: true,
       drop: function (info) {
+
+        // console.log(info.draggedEl.getAttribute('data-user'));
+        
         let id = info.draggedEl.attributes[2].value;
         let nombreProgramado = info.draggedEl.attributes[3].value;
         let fecha = info.dateStr;
+
+        if ((calendar.getEvents().filter(e => e.id === id && e.startStr === fecha).length > 0) === true) {
+          calendar.getEvents().filter(e => e.id === id && e.startStr === fecha)[0].remove();
+          // toastr.info('Este usuario ya se encuentra programado para este día !');
+        }
 
         setLocalStorage(id, nombreProgramado, fecha, fecha);
       },
@@ -198,7 +193,7 @@ function getDataUser() {
   // fetch(`${URL_BASE}usuarios`, headers);
   // return response;
 
-  fetch(`${URL_BASE}usuarios`, headers)
+  fetch(`${URL_BASE}usuarios`)
     .then((resp) => resp.json())
     .then((data) => (this.dataUser = data))
     .catch((error) => console.log(error));
@@ -209,7 +204,7 @@ function getdataPeriods() {
   // let response = fetch(`${URL_BASE}periodos`, headers);
   // return response;
 
-  fetch(`${URL_BASE}periodos`, headers)
+  fetch(`${URL_BASE}periodos`)
     .then((resp) => resp.json())
     .then((data) => (this.dataPeriods = data))
     .catch((error) => console.log(error));
