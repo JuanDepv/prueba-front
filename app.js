@@ -14,7 +14,6 @@ const headers = {'Content-Type': 'application/json'};
 
 
 document.addEventListener("DOMContentLoaded", function () {
-<<<<<<< HEAD
     getDataUser();
     getdataPeriods();
     setTimeout(() => {
@@ -32,119 +31,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }, 1000);
 })
-=======
-  
-  setTimeout(() => {
-    getUser();
-
-    new FullCalendar.Draggable(draggableUser, {
-      itemSelector: "#user",
-      eventData: function (eventEl) {
-        return {
-          id: eventEl.getAttribute("data-user"),
-          title: eventEl.innerText
-        };
-      },
-    });
-
-    const calendarLib = new FullCalendar.Calendar(calendar, {
-      initialView: "dayGridMonth",
-      themeSystem: "bootstrap",
-      timeZone: "UTC",
-      locale: "es",
-
-      // date Navigation - initial perids and range Periods
-      initialDate: "2020-06-01",
-      validRange: {
-        start: firstPositionDate().toString(),
-        end: lastPositionDate().toString(),
-      },
-      headerToolbar: {
-        left: "prev,next",
-        center: "title",
-        right: "dayGridMonth",
-      },
-
-      //sizing
-      height: 700,
-
-      // date nav links
-      navLinks: true,
-
-      //
-      fixedWeekCount: false,
-
-      // date click and selecting
-      selectable: true,
-      selectMirror: true,
-
-      // events popover
-      dayMaxEventRows: true,
-      views: {
-        timeGrid: {
-          dayMaxEventRows: 4, // adjust to 6 only for timeGridWeek/timeGridDay
-        },
-      },
-      // select: function (info) {
-      //   // calendar.addEvent({
-      //   //   title: title,
-      //   //   start: arg.start,
-      //   //   end: info.startStr,
-      //   //   allDay: info.endStr,
-      //   // });
-      //   alert(info);
-      //   alert("selected " + info.startStr + " to " + info.endStr);
-      // },
-
-      eventClick: function(info) {
-
-        // alert('Event: ' + info.event.title);
-        // alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
-        // alert('View: ' + info.view.type);
-      },
-
-      eventOverlap: function (stillEvent, movingEvent) {
-        return stillEvent.allDay && movingEvent.allDay;
-      },
-
-      editable: true,
-      droppable: true,
-      eventResizableFromStart: true,
-      drop: function (info) {
-
-        // console.log(info.draggedEl.getAttribute('data-user'));
-        
-        let id = info.draggedEl.attributes[2].value;
-        let nombreProgramado = info.draggedEl.attributes[3].value;
-        let fecha = info.dateStr;
-
-        if ((calendar.getEvents().filter(e => e.id === id && e.startStr === fecha).length > 0) === true) {
-          calendar.getEvents().filter(e => e.id === id && e.startStr === fecha)[0].remove();
-          // toastr.info('Este usuario ya se encuentra programado para este día !');
-        }
-
-        setLocalStorage(id, nombreProgramado, fecha, fecha);
-      },
-
-      eventReceive: function (info) {
-        // eventDay(info.event.startStr);
-        // alert("event received! - eventReceive", info.event);
-      },
-
-      // confirm for move the event
-      eventDrop: function (info) {
-        if (!confirm("Estas seguro de cambiar la programación")) {
-          info.revert();
-        }
-      },
-    });
-    
-    calendarLib.render();
-    
-  }, 2000);
-
-});
->>>>>>> 78fcd5d630552c30e308b831385d2ba189661868
 
 /**
  * events -
@@ -355,35 +241,18 @@ function getPosition(e) {
 // returns the info users
 function getDataUser() {
 
-<<<<<<< HEAD
   fetch(`${URL_BASE}usuarios`, headers)
         .then((resp) => resp.json())
         .then((data) => (this.dataUser = data))
         .catch((error) => console.log(error));
-=======
-  fetch(`${URL_BASE}usuarios`)
-    .then((resp) => resp.json())
-    .then((data) => (this.dataUser = data))
-    .catch((error) => console.log(error));
->>>>>>> 78fcd5d630552c30e308b831385d2ba189661868
 }
 
 // returns the periods
 function getdataPeriods() {
-  // let response = fetch(`${URL_BASE}periodos`, headers);
-  // return response;
-
-<<<<<<< HEAD
   fetch(`${URL_BASE}periodos`, headers)
         .then((resp) => resp.json())
         .then((data) => (this.dataPeriods = data))
         .catch((error) => console.log(error));
-=======
-  fetch(`${URL_BASE}periodos`)
-    .then((resp) => resp.json())
-    .then((data) => (this.dataPeriods = data))
-    .catch((error) => console.log(error));
->>>>>>> 78fcd5d630552c30e308b831385d2ba189661868
 }
 
 // genarete a random color
