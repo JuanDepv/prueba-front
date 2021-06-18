@@ -12,6 +12,24 @@ var dataPeriods = [];
 
 const headers = {'Content-Type': 'application/json'};
 
+toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": false,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "2000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  }
+
 
 document.addEventListener("DOMContentLoaded", function () {
     getDataUser();
@@ -71,16 +89,16 @@ document
                 .then((res) => {
                     console.log(res);
                     if (res.state === 1) {
-                        alert("se ha enviado los datos");
+                        toastr.success("se ha enviado los datos");
                         localStorage.removeItem("programation");
                         localStorage.setItem("programation", "[]");
                     }
                 });
             } else {
-                alert("No hay pramaciones para enviar....!")  
+                toastr.warning("No hay programaciones para enviar....!")
             }
         } else {
-            alert("No hay pramaciones para enviar....!")
+            toastr.warning("No hay programaciones para enviar....!")
         }
   });
 
@@ -162,7 +180,7 @@ document
 
             if ((calendar.getEvents().filter(e => e.id === idEventDropped && e.startStr === fecha).length > 0) === true) {
                 calendar.getEvents().filter(e => e.id === idEventDropped && e.startStr === fecha)[0].remove();
-                alert('Este usuario ya se encuentra programado para este día !');
+                toastr.info('Este usuario ya se encuentra programado para este día !');
             } else {
                 setLocalStorage(id, nombreProgramado, fecha, fecha);
             }
@@ -225,9 +243,11 @@ function getPosition(e) {
     if (!e) var e = window.event;
 
     if (e.pageX || e.pageY) {
+        console.log("primer if getPosition");
         posx = e.pageX;
         posy = e.pageY;
     } else if (e.clientX || e.clientY) {
+        console.log("segundo if getPosition");
         posx = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
         posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
     }
