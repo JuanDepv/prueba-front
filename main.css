@@ -45,3 +45,47 @@
     width: 30px;
     max-width: 20%;
 }
+
+
+/* menu */
+.context-menu {
+    display: none;
+    position: absolute;
+    z-index: 10;
+    padding: 12px 0;
+    width: 160px;
+    background-color: #000;
+    border: solid 1px #dfdfdf;
+    box-shadow: 1px 1px 2px #cfcfcf;
+  }
+  
+  .context-menu--active {
+    display: block;
+  }
+  
+  .context-menu__items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .context-menu__item {
+    display: block;
+    margin-bottom: 4px;
+  }
+  
+  .context-menu__item:last-child {
+    margin-bottom: 0;
+  }
+  
+  .context-menu__link {
+    display: block;
+    padding: 4px 12px;
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .context-menu__link:hover {
+    color: #fff;
+    background-color: #0066aa;
+  }
