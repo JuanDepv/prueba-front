@@ -40,19 +40,19 @@ document.addEventListener("DOMContentLoaded", function () {
 document
   .querySelector("#buscador")
   .addEventListener("keyup", function (event) {
-  event.preventDefault();
-  let valueSearch = document.querySelector("#buscador").value;
+      event.preventDefault();
+      let valueSearch = document.querySelector("#buscador").value;
 
-  if (valueSearch.trim() != "") {
-    let data = searchs(valueSearch);
-    if (data.length === 0) {
-      $("#usuarios").html("<div class='pl-3'>Data not found...</div>");
-    } else {
-      templeteUser(data);
-    }
-  } else {
-    getUser();
-  }
+      if (valueSearch.trim() != "") {
+        let data = searchs(valueSearch);
+        if (data.length === 0) {
+          $("#usuarios").html("<div class='pl-3'>Data not found...</div>");
+        } else {
+          templeteUser(data);
+        }
+      } else {
+        getUser();
+      }
   });
 
 document
